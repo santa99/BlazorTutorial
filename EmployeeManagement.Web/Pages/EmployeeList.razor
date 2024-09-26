@@ -1,0 +1,43 @@
+﻿@page "/"
+@inherits EmployeeListBase;
+
+
+<b>Colour :</b> <input @bind="Colour" />
+<div>
+    <textarea 
+           @bind="Text" @bind:event="oninput"></textarea>
+    <div>
+        Count : @Text.Length
+    </div>
+    <div @bind-style="Colour" @bind-style:event="onchange">
+        <h3>The background colour of this text changes</h3>
+    </div>
+</div>
+
+
+
+<h3>Employee List</h3>
+
+<input type="checkbox" id="showFooter" @bind="ShowFooter"/>
+<label for="showFooter">Show Footer</label>
+
+<label for="selected">Selected @SelectedEmployeesCount</label>
+
+@if (Employees == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="card-deck">
+        @foreach (var employee in Employees)
+        {
+            <DisplayEmployee 
+                Employee="employee" 
+                ShowFooter="@ShowFooter" 
+                OnEmployeeSelection="EmployeeSelectionChanged"
+                OnEmployeeDeleted="EmployeeDeleted"
+                />            
+        }
+    </div>
+}
